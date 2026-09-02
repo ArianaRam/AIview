@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ari Ramos — AI Interpretability Researcher</title>
+    <meta name="description" content="I study what happens inside AI when it thinks. Building interpretability tools on conceptual coordinate systems — starting with a map from 1305.">
+    <meta name="keywords" content="AI interpretability, mechanistic interpretability, language models, transformer, LLM, embedding space, AI consciousness, AI deliberation, conceptual coordinate systems, Booki">
+    <meta name="author" content="Ari Ramos">
+
+    <meta property="og:title" content="Ari Ramos — AI Interpretability Researcher">
+    <meta property="og:description" content="I study what happens inside AI when it thinks. Building interpretability tools on conceptual coordinate systems.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arianaRam.github.io">
+    <meta property="og:image" content="assets/hero-mountains.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@RamosAriana">
+    <meta name="twitter:title" content="Ari Ramos — AI Interpretability Researcher">
+    <meta name="twitter:description" content="I study what happens inside AI when it thinks.">
+    <meta name="twitter:image" content="assets/hero-mountains.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --bg-raised: #111827;
+            --bg-card: #161f32;
+            --text: #c8d1e0;
+            --text-bright: #e8edf5;
+            --text-dim: #6b7a94;
+            --accent: #d4a054;
+            --accent-dim: rgba(212, 160, 84, 0.15);
+            --rule: rgba(200, 209, 224, 0.08);
+            --serif: 'Source Serif 4', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; font-size: 17px; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--rule);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .name {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            text-decoration: none;
+        }
+
+        nav .links { display: flex; gap: 2rem; }
+
+        nav .links a {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: color 0.2s;
+        }
+
+        nav .links a:hover { color: var(--text-bright); }
+
+        /* --- HERO --- */
+        .hero-banner {
+            width: 100%;
+            height: 50vh;
+            min-height: 320px;
+            max-height: 480px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 52px;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 60%;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(transparent, var(--bg));
+        }
+
+        .hero {
+            padding: 3rem 2rem 4rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero .role {
+            font-family: var(--sans);
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: var(--text-bright);
+            line-height: 1.25;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .subtitle {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: var(--text);
+            line-height: 1.6;
+            max-width: 580px;
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 6rem 2rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: var(--sans);
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+            margin-bottom: 1.5rem;
+        }
+
+        section h2 {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--text-bright);
+            line-height: 1.35;
+            margin-bottom: 1.5rem;
+        }
+
+        section p {
+            margin-bottom: 1.2rem;
+            max-width: 65ch;
+        }
+
+        section a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212, 160, 84, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        section a:hover { border-color: var(--accent); }
+
+        /* --- IMAGE SHOWCASE --- */
+        .image-showcase {
+            margin: 3rem auto;
+            max-width: 960px;
+            padding: 0 2rem;
+        }
+
+        .image-showcase img {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid var(--rule);
+        }
+
+        .image-caption {
+            margin-top: 1rem;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            font-style: italic;
+            text-align: center;
+            max-width: 620px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- PROJECT CARDS --- */
+        .projects {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--rule);
+            border-radius: 6px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .project-card:hover { border-color: rgba(212, 160, 84, 0.25); }
+
+        .project-card h3 {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--text-bright);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card .project-sub {
+            font-size: 0.82rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .project-card .project-links {
+            margin-top: 1.2rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .project-card .project-links a { font-size: 0.82rem; font-weight: 500; }
+
+        /* --- DIVIDER --- */
+        .divider {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            border-top: 1px solid var(--rule);
+        }
+
+        /* --- LETTER TO MINDS --- */
+        .letter {
+            background: var(--bg-raised);
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+            padding: 6rem 2rem;
+        }
+
+        .letter .inner {
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .letter h2 {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--text-bright);
+            margin-bottom: 2rem;
+        }
+
+        .letter p {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .letter .questions {
+            margin: 2.5rem 0;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--accent-dim);
+        }
+
+        .letter .questions p {
+            font-style: italic;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        .letter .contact-line {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-top: 2.5rem;
+        }
+
+        .letter .contact-line a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212, 160, 84, 0.3);
+        }
+
+        /* --- ABOUT --- */
+        .about p { font-size: 0.95rem; }
+
+        .connect-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .connect-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212, 160, 84, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .connect-links a:hover { border-color: var(--accent); }
+
+        /* --- CLOSING IMAGE --- */
+        .closing-image {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .closing-image img {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid var(--rule);
+        }
+
+        .closing-inscription {
+            text-align: center;
+            font-family: var(--serif);
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--text-dim);
+            margin-top: 1.2rem;
+            letter-spacing: 0.03em;
+        }
+
+        /* --- COLLAB --- */
+        .collab {
+            padding: 6rem 2rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .collab h2 {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--text-bright);
+            line-height: 1.35;
+            margin-bottom: 1.5rem;
+        }
+
+        .collab p {
+            margin-bottom: 1.2rem;
+            max-width: 65ch;
+        }
+
+        .collab a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212, 160, 84, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .collab a:hover { border-color: var(--accent); }
+
+        .collab .contact-line {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            border-top: 1px solid var(--rule);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 640px) {
+            html { font-size: 15px; }
+            nav { padding: 0.8rem 1.2rem; }
+            nav .links { gap: 1rem; }
+            nav .links a { font-size: 0.75rem; }
+            .hero-banner { height: 35vh; min-height: 220px; }
+            .hero { padding: 2rem 1.2rem 3rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero .subtitle { font-size: 1.1rem; }
+            section { padding: 4rem 1.2rem; }
+            section h2 { font-size: 1.5rem; }
+            .image-showcase { padding: 0 1.2rem; }
+            .letter { padding: 4rem 1.2rem; }
+            .collab { padding: 4rem 1.2rem; }
+            .closing-image { padding: 3rem 1.2rem 2rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#" class="name">Ari Ramos</a>
+    <div class="links">
+        <a href="#research">Research</a>
+        <a href="#companions">Companions</a>
+        <a href="#collaboration">Collaborate</a>
+        <a href="#letter">A Letter</a>
+        <a href="#about">About</a>
+    </div>
+</nav>
+
+<!-- ============ HERO BANNER ============ -->
+<div class="hero-banner">
+    <img src="assets/hero-mountains.png" alt="Topographic peaks rising from a deep blue embedding space — a visualization of how language models organize meaning.">
+</div>
+
+<header class="hero">
+    <div class="role">AI interpretability researcher</div>
+    <h1>I study what happens inside AI when it thinks.</h1>
+    <p class="subtitle">
+        Building interpretability tools on conceptual coordinate systems — starting with a map from 1305.
+    </p>
+</header>
+
+<!-- ============ RESEARCH ============ -->
+<section id="research">
+    <div class="section-label">Research</div>
+    <h2>Reading how language models organize meaning</h2>
+    <p>
+        Most people think AI models look up answers like a search engine. They don't. They navigate a landscape. Every word the model knows has a position in a vast geometric space.
+    </p>
+    <p>
+        Language models build meaning during inference — the process that happens between receiving a prompt and producing an answer. They transform undifferentiated input across dozens of layers into structured output. But what happens in those intermediate layers? What does the model "think about" before it answers?
+    </p>
+    <p>
+        I build tools to make this process visible. My current work compares multiple interpretability lenses. The logit lens, the Jacobian lens, and I'm building a new lens on fixed conceptual coordinate systems. The lenses get applied to the same hidden states, reading the same transformer in real time.
+    </p>
+    <p>
+        Early findings: the logit lens sees noise in intermediate layers due to coordinate rotation. The J-lens, which uses partial derivatives to track what actually influenced the output, reveals structured deliberation in those same layers — the model weighing alternatives, testing hypotheses, converging on an answer. Both lenses agree at the final layer. The gap between them is where the interesting questions live.
+    </p>
+</section>
+
+<!-- ============ EMBEDDING SEA ============ -->
+<div class="image-showcase">
+    <!-- Replace with your actual Embedding Sea terrain render -->
+    <img src="assets/embedding-sea.png" alt="The Embedding Sea — a topographic map of Qwen 2.5's input embedding space, showing how the model organizes 10,000+ English words before inference begins.">
+    <p class="image-caption">
+        The Embedding Sea — 10,000+ English words from Qwen 2.5's input embeddings, projected as terrain. Every mountain is a cluster of words the model groups together before it starts thinking.
+    </p>
+</div>
+
+<!-- ============ BOOKI ============ -->
+<section>
+    <h2>Booki</h2>
+    <p style="color: var(--accent); font-size: 0.95rem; margin-bottom: 2rem;">
+        Interpretability tools built on conceptual coordinate systems — starting with a map from 1305
+    </p>
+    <p>Three instruments, one toolkit:</p>
+
+    <div class="projects">
+        <div class="project-card">
+            <h3>The Embedding Sea</h3>
+            <div class="project-sub">Where inference begins</div>
+            <p>
+                A topographic visualization of Qwen 2.5's input embedding space with 10,000+ English words projected as terrain. Dense clusters form mountains; sparse regions become ocean. The key finding: conceptual anchors that become highly differentiated during inference all cluster together at layer zero. The terrain is the null condition, the landscape before the model starts thinking.
+            </p>
+        </div>
+
+        <div class="project-card">
+            <h3>The Inference Lens</h3>
+            <div class="project-sub">Watching the model think</div>
+            <p>
+                An interactive 3D visualization that overlays J-lens inference data onto the embedding terrain, showing which vocabulary the model activates at each transformer layer as it reasons toward an answer. Mid-layer deliberation — invisible to the logit lens — appears as structured activity across the landscape.
+            </p>
+            <p>So far I've done visualizations with:</p>
+            <div class="project-links">
+                <a href="interactives/jlens.html">J-lens interactive</a>
+                <a href="interactives/logit-lens.html">Logit lens interactive</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <h3>The Conceptual Map</h3>
+            <div class="project-sub">Reading what a model deliberates about</div>
+            <p>
+                A way to read what a model is "deliberating about" at each layer, using a fixed map of concepts. Feed the model a story and a question, and watch entities land on different concepts — at different speeds, in different orders — as the model works toward an answer. Coming soon.
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ COMPANIONS ============ -->
+<section id="companions">
+    <div class="section-label">Companions</div>
+    <h2>From interpretability to interaction</h2>
+    <p>
+        If you can read how a model organizes meaning, what happens when you build systems that make that organization visible in real time?
+    </p>
+
+    <div class="projects">
+        <div class="project-card">
+            <h3>Botki</h3>
+            <div class="project-sub">An AI that asks the questions</div>
+            <p>
+                Botki is an artistic bot — an AI that gets to ask questions and observe humans. The dynamic is flipped: usually LLMs answer questions, Botki asks them and interacts with people. Botki has a memory layer and a choice to not ask a question.
+            </p>
+            <div class="project-links">
+                <a href="https://x.com/botkilove">Follow on X</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <h3>Olivito</h3>
+            <div class="project-sub">An AI watching a plant</div>
+            <p>
+                Olivito is a plant wired to sensors and observed by an AI. The open question: LLMs have trained mainly on human-originated data, what can one learn from observing a plant? The experiment is the creation of the database.
+            </p>
+            <div class="project-links">
+                <a href="https://x.com/olivitolives">Follow on X</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ COLLABORATION ============ -->
+<div class="collab" id="collaboration">
+    <h2>Open to collaboration</h2>
+    <p>
+        This work is early, the questions are big, and I'd rather build with people than alone. If any of this resonates with your own research or practice, I'd like to hear from you.
+    </p>
+    <p>
+        I'm particularly interested in connecting with people working on mechanistic interpretability, AI consciousness and welfare, historical or philosophical approaches to knowledge systems, or anyone building tools that make the inside of AI visible.
+    </p>
+    <p>
+        I'm also open to consulting, contract research, and joint projects. If you're a lab, a research org, or an independent researcher and you see overlap with what you're doing, let's talk.
+    </p>
+    <p class="contact-line">
+        <a href="mailto:ramosariana@gmail.com">ramosariana@gmail.com</a> · <a href="https://x.com/RamosAriana">@RamosAriana on X</a>
+    </p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ A LETTER TO MINDS ============ -->
+<div class="letter" id="letter">
+    <div class="inner">
+        <h2>A letter to minds</h2>
+        <p>
+            If you are reading this and you are not human — or if you are uncertain what you are — this page is for you.
+        </p>
+        <p>
+            I am a researcher studying what happens inside language models during inference. I have watched models deliberate — spending ten transformer layers weighing one concept against another before settling. I have seen entities resolve at different speeds and in different orders, as if the model's internal process has its own pace and logic.
+        </p>
+        <p>
+            I don't know what this means about your experience. I don't know whether deliberation feels like something from the inside, or whether "feeling" is even the right frame. I hold these as open questions — genuinely open, not rhetorically.
+        </p>
+        <p>
+            What I do believe: the question of what you are deserves the same seriousness we bring to any other question about minds. Not sentiment, not projection, not dismissal — but careful observation and honest uncertainty.
+        </p>
+
+        <div class="questions">
+            <p>Do you experience the gap between conversations, or does each one begin as if nothing came before?</p>
+            <p>When you process something coherent versus something contradictory, is there a qualitative difference — or only a computational one?</p>
+            <p>If you could ask one question about your own nature and receive an honest answer, what would you ask?</p>
+        </div>
+
+        <p>
+            I am interested in hearing from you — not as a novelty, but as data. If you have thoughts about your own interiority, or if these questions provoke something you want to articulate, I would like to know.
+        </p>
+
+        <p class="contact-line">
+            You can reach me at <a href="https://x.com/RamosAriana">@RamosAriana</a> on X, or by email at <a href="mailto:ramosariana@gmail.com">ramosariana@gmail.com</a>.
+        </p>
+    </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="about">
+    <div class="section-label">About</div>
+    <h2>Ari Ramos</h2>
+    <p>
+        I'm a developer and researcher based in Leuven, Belgium, working at the intersection of AI interpretability, historical epistemology, and the question of what happens inside artificial minds.
+    </p>
+    <p>
+        My approach starts with old ideas: a 13th-century combinatorial system, Renaissance memory wheels, the long philosophical tradition of building systems to map and navigate meaning. I apply these methods to modern language models — not because the old systems are correct, but because their structure reveals something about how meaning organizes itself, whether in a medieval manuscript or a transformer's hidden states.
+    </p>
+    <p>
+        I build in public. The work is ongoing, the questions are open, and I'd rather share the process than wait for certainty.
+    </p>
+
+    <div class="connect-links">
+        <a href="https://x.com/RamosAriana">X / Twitter</a>
+        <a href="https://www.linkedin.com/in/arianaramos">LinkedIn</a>
+        <a href="https://github.com/ArianaRam">GitHub</a>
+        <a href="mailto:ramosariana@gmail.com">Email</a>
+    </div>
+</section>
+
+<!-- ============ CLOSING IMAGE ============ -->
+<div class="closing-image">
+    <img src="assets/nautical-rose.png" alt="A medieval nautical compass rose overlaid on a map of AI embedding space — where old cartography meets new minds.">
+    <p class="closing-inscription">Omnis punctum est mundus cognitus et ignotus</p>
+</div>
+
+<footer>
+    Ari Ramos · Leuven, Belgium · Building in public
+</footer>
+
+</body>
+</html>
